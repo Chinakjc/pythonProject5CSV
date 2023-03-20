@@ -21,8 +21,8 @@ fig, ax = plt.subplots(figsize=(6, 6), dpi=100, facecolor='black')
 ax.set_facecolor('black')
 for coords in coords_list:
     ax.scatter([coord[0] for coord in coords], [coord[1] for coord in coords], color='white')
-    ax.set_xlim(0, 30)
-    ax.set_ylim(0, 30)
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
     ax.set_aspect('equal', adjustable='box')
     ax.set_title('Orbits')
     ax.set_xlabel('X')
@@ -37,5 +37,5 @@ plt.close(fig)
 
 imageio.mimsave('animation.gif', images, fps=20)
 
-imageio.mimsave('animation.gif', images, duration=0.05)
+imageio.mimsave('animation.gif', images, duration=0.02)
 
