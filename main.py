@@ -1,18 +1,10 @@
-import matplotlib.pyplot as plt
-import imageio
-import os
-
 import re
 import matplotlib.pyplot as plt
-
-import matplotlib.pyplot as plt
 import imageio
-import re
-
 import numpy as np
 
 # 读取数据文件
-with open('5.dat') as f:
+with open('5.dat', 'r') as f:
     lines = f.readlines()
 
 # 解析坐标数据
@@ -25,28 +17,25 @@ for line in lines[1:]:
 plt.switch_backend('agg')
 # 生成gif图像
 images = []
+fig, ax = plt.subplots(figsize=(6, 6), dpi=100, facecolor='black')
+ax.set_facecolor('black')
 for coords in coords_list:
-    fig = plt.figure(figsize=(6, 6), dpi=100)
-    plt.scatter([coord[0] for coord in coords], [coord[1] for coord in coords])
-    plt.xlim(0, 30)
-    plt.ylim(0, 30)
-    plt.gca().set_aspect('equal', adjustable='box')
-    plt.title('Orbits')
-    plt.xlabel('X')
-    plt.ylabel('Y')
-    plt.grid()
-    plt.draw()
-    plt.pause(0.01)
-    img = np.array(fig.canvas.renderer.buffer_rgba())
+    ax.scatter([coord[0] for coord in coords], [coord[1] for coord in coords], color='white')
+    ax.set_xlim(0, 30)
+    ax.set_ylim(0, 30)
+    ax.set_aspect('equal', adjustable='box')
+    ax.set_title('Orbits')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.grid()
+    fig.canvas.draw()
+    img = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
+    img = img.reshape(fig.canvas.get_width_height()[::-1] + (3,))
     images.append(img)
-    plt.clf()
+    ax.clear()
+plt.close(fig)
 
-imageio.mimsave('animation.gif', images, duration=0.1)
+imageio.mimsave('animation.gif', images, fps=20)
 
+imageio.mimsave('animation.gif', images, duration=0.05)
 
-
-
- # 删除临时文件
-for file in os.listdir('.'):
-    if file.startswith('frame_') and file.endswith('.png'):
-        os.remove(file)
