@@ -7,7 +7,7 @@ mpl.style.use('dark_background')
 
 def csv2D(data_name,fps,duration,rayon):
     # lire donnees
-    with open(data_name, 'r') as f:
+    with open(data_name+'.dat', 'r') as f:
         lines = f.readlines()
 
     # coordonnes
@@ -37,12 +37,12 @@ def csv2D(data_name,fps,duration,rayon):
         images.append(img)
         ax.clear()
     plt.close(fig)
-    imageio.mimsave('animation2D_2.gif', images, fps = fps,duration=duration)
+    imageio.mimsave('animation2D_'+data_name+'.gif', images, fps = fps,duration=duration)
 
 
 def csv3D(data_name,fps,duration,rayon):
     # lire donnees
-    with open(data_name, 'r') as f:
+    with open(data_name+'.dat', 'r') as f:
         lines = f.readlines()
 
     # coordonnees
@@ -79,10 +79,10 @@ def csv3D(data_name,fps,duration,rayon):
 
     plt.close(fig)
 
-    imageio.mimsave('animation3D.gif', images, fps=fps, duration=duration)
+    imageio.mimsave('animation3D_'+data_name+'.gif', images, fps=fps, duration=duration)
 
 
 
-#csv3D(data_name='9.dat',fps=60,duration=0.01,rayon=10)
-csv2D(data_name='10.dat',fps=60,duration=0.01,rayon=10)
+csv3D(data_name='13',fps=60,duration=0.01,rayon=10)
+#csv2D(data_name='11',fps=60,duration=0.01,rayon=10)
 
